@@ -1,6 +1,7 @@
 = kotlin-examples image:https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/kotlin-examples"]
 
 //tag::content[]
+TODO: in progress ...in very beginning
 
 . link:./netty[Netty]
 
