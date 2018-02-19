@@ -10,11 +10,14 @@ jdk:
 - openjdk8
 install: true
 before_script:
-- sudo apt udate -y || true
-- sudo apt install -y --no-install-recommends bash unzip
+- sudo apt update -y || true
+- sudo apt install -y --no-install-recommends bash unzip git
 script:
+#- >
+#  bash gradlew clean asciidoctor docs \
+#    -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
+#    -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD || true
 - bash gradlew clean asciidoctor
-- bash gradlew docs -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD
 #
 - bash gradlew
 - java -jar netty/build/libs/*-all.jar

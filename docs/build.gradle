@@ -42,8 +42,11 @@ asciidoctor.doLast {
 
 gitPublish {
 
-//  repoUri = "git@github.com:daggerok/kotlin-examples.git"
-  repoUri = "https://github.com/daggerok/kotlin-examples"
+  //// bash gradlew clean asciidoctor docs \
+  ////   -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
+  ////   -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD
+  //repoUri = "https://github.com/daggerok/kotlin-examples.git"
+  repoUri = "git@github.com:daggerok/kotlin-examples.git"
   branch = "gh-pages"
 
   contents {
