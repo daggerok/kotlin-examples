@@ -1,0 +1,3 @@
+This documentation contains some help to
+link:{github_url}[examples from kotlin-examples repository].
+It's contains some kotlin playground projects
