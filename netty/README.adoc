@@ -15,4 +15,6 @@ java -jar target/*-all.jar
 bash target/*-all.jar
 ----
 
+. link:https://netty.io/wiki/all-documents.html[Netty reference]
+
 //end::content[]
