@@ -10,8 +10,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <!-- TODO: add here your first submodule -->
-    <!-- <module>my-sub-module</module> -->
+     <module>netty</module>
   </modules>
 
   <properties>

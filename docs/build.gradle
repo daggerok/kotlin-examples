@@ -43,7 +43,7 @@ asciidoctor.doLast {
 gitPublish {
 
 //  repoUri = "git@github.com:daggerok/kotlin-examples.git"
-  repoUri = "https://github.com/daggerok/kotlin-examples.git"
+  repoUri = "https://github.com/daggerok/kotlin-examples"
   branch = "gh-pages"
 
   contents {

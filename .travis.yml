@@ -1,25 +1,34 @@
-#service:
-#- docker
-#sudo: required
 group: travis_lts
 env:
   global:
   - TERM=dumb
-  - secure: "sc34wHwsLTKMWTxLhfyWe7lbaYadcSAo0lyTxBdHinhH82ohWGVYpV7Zm3pbBH15BZ6V5pvqspgm2oNOExHBonZ1yhn3VUreso+4h+nf8mAwCjH+71MNTeuQo+d8Jky3SIeLvf4LqYZ6Zbf8yXksPF3DFG49M1S1KByIPmF+LT08pbZEptrsb+T6tuAIyWqMosx4Y4mKub9IgFjudtw42yd+sE4kihpVhW9ebw3wrZYtREXuZxIDfIvvjC+n5cEs0plm41725CVTv893WU6P3Kl0Gtkl6mER6HDLYPIKnSBrDFKvnmMSD7Sc3w/wPFaxfRayC4LB2til324+IcmFq8EeQ7mKRsEwQiIqWra8702/5v9+JH4JntO5lS8cs5osMEv7bf1+bI4+AFTb4S2PqjWFwuvts2yLOZ3tmpFMjHK666+Jaa63JBSVA4+Bhjn2+9hAeIVxhQuiT5oZ3fenHFC8cZV/ywDqjSWfzgoEWJNfiBAfl/ZQRgt1JBFSJrCVjaYIoqscj64L89KMzBu0wrkuepU3n4gJMGPX+7cv4CHcrzCXX3f3mpfiP58swfCh2bNNhuR1xCu7Yyus2UsFcrI5ell4b84Hl1nkY6pOZhr9cwiylSHkBM2TEZQlCRLqbATaFK8/4GpDcCjFey6tyrg6tqhflND+oiiR3WZQYo0="
+  - secure: "ly36768fotI0oeMXXHBrf3aVWGLbgTofFA1AcXj/I0ToVk+I5ecR/JugXu344qoCbBWlZm2PUofkXkd7YtSdbtlJeNemKlV+nF4P5KXqKwZJXzzIh9lcN+cntAwFBZ9QGMDyk/ku6kaUN5akgUSwg9WFsjPMBO6QScJitmwE95TXq92jmEmLlGFEcjuqLol3NRemjcyu2T0BYsOeZZ5SrkMpdZvq031FpJCR1c+mL9rkne6D6caUnHSVS2jBry//bfsVHux+JFOI1QDeuQXgNwUCsLLCH1pTcByTcWMNS63yI1nc8JH/DBmLmNSOA2Zun8m49tgnDpmTPvWtjLvC+F6D+PxjldSpq3beXGRhzi23SVAJ/JfuH+cx+cIQF8wCAfB7ZijYPA7p8VtU4oftyQZPaNdcIpjooEwfytIp3p90iITeScZDggxOk/Uez6lm1g/sHOJ+bdAAb2FAd/AWocwUXMQgSywQTmTZEb6pHt5CQHbZ8QNWhj6qk50/YQFQ2yc4YwREqbxghx3X4HduwAE9OIDnXFEZPtyFA0fjtD2puQP07ml8+s6DrTpY0TqUiR2VNgQret8vOHd/YqNTiZj0UrJqvp7ONbdogxMUDVI6ppIQAQl3lV8HSPoPbs6qj5PPfah3zjjiixCf9qIO3NBLgfAHedo+lLX3iR/D3lA="
+  - secure: "NZEPLyHf31v1v5sBKJvkiO3kCnHLTjkKEZlBVfK/rDfBDdXNRulIpSJAr2ABa0SLmwo6AI1OcNK5fN76JBPBEXFm7gHxgJkNj5f0NJepYYOQ0wIkps4z4TexsIubsbfg4z2uW2EDhiyke7JVnDVSrTJ/z8a3d8SGWRxZqNXYe4gxncvzKxQmZTMpX7YiqW/vyxfMBiRwXi1znc5P0uMjri+Lhcpn2iTAguTVBKyMNjTFG4J8sDyeY+Nw7h3Jwelp1wh6vthFDsD41MzmhYKnwUBiwNXs2QOup8AAqBeMfXhm1ByLuoEgwRyInJd4RhwBbEH4xSrtn9ltOSDV6oAj+iwxnWzz1uWrov6zBHn8cnVw1rVIhQBXYEqfR66fj7TJ6cBfogFCHo1mkaXEvnG7qC0AQFeVTXKZ0kmDytad3vBh2AKUFUPwHz29VKgnjD/+xqEdTlk42m+bSy5XD/xv1cbedxogfnuFlipGhcuzZnvD26B2zXbFamSS8iI6kpCmrrDoVeYSyChBw5whzgBBk2afNZ2SVNzuyg+1QeY/ubGSbaIrx7/hkmYk7caURQEfZm4yoknWp6A85v1+iIff996q0EcVzHLV+NLgH+QTIH76MciHvouWPUSSk8WVgTtyor0/DUPNMeOrTo2gTpxtryYjC6XxfGUUxJ8SccwXkTI="
 language: java
 jdk:
 - oraclejdk8
 - openjdk8
 install: true
-#before_script:
-#- sudo apt udate -y || true
-#- sudo apt install -y --no-install-recommends curl jq libxml2-utils docker-ce python-pip
-#- sudo pip install docker-compose httpie
-#- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+before_script:
+- sudo apt udate -y || true
+- sudo apt install -y --no-install-recommends bash unzip
 script:
-- bash mvnw
+- bash gradlew clean asciidoctor
+- bash gradlew docs -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD
+#
 - bash gradlew
+- java -jar netty/build/libs/*-all.jar
+#
+- bash gradlew clean :netty:installDist
+- bash netty/build/install/netty/bin/netty
+#
+- bash gradlew clean netty:distZip
+- unzip -o netty/build/distributions/*.zip -d /tmp
+- bash /tmp/netty-0.0.1/bin/netty
+#
+- bash mvnw
+- java -jar netty/target/*-all.jar
 cache:
   directories:
-  - $HOME/.m2
-  - $HOME/.gradle
+  - "$HOME/.m2"
+  - "$HOME/.gradle"
