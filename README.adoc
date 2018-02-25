@@ -10,4 +10,8 @@ other repos:
 . link:https://github.com/daggerok/spring-data-examples/tree/master/redis-store[Kotlin | Redis Store]
 . link:https://github.com/daggerok/spring-kotlin-examples[Github: daggerok/spring-kotlin-examples]
 
+TODO:
+
+. link:https://www.linkedin.com/pulse/from-java-8-kotlin-aliaksandr-liakh
+
 //end::content[]
