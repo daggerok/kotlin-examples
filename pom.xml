@@ -14,6 +14,19 @@
     <tag>@{project.version}</tag>
   </scm>
 
+  <distributionManagement>
+    <snapshotRepository>
+      <id>snapshotRepository</id>
+      <name>snapshotRepository</name>
+      <url>file://${project.build}/repo/snapshot</url>
+    </snapshotRepository>
+    <repository>
+      <id>releaseRepository</id>
+      <name>releaseRepository</name>
+      <url>file://${project.build}/repo/repository</url>
+    </repository>
+  </distributionManagement>
+
   <modules>
     <module>netty</module>
     <module>redis-lettuce</module>
