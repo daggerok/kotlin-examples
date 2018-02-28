@@ -42,4 +42,10 @@
   </build>
 ----
 
+[source,xml]
+----
+./mvnw release:prepare
+./mvnw release:perform
+----
+
 //end::content[]
