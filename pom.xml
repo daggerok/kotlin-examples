@@ -10,7 +10,8 @@
   <packaging>pom</packaging>
 
   <modules>
-     <module>netty</module>
+    <module>netty</module>
+    <module>redis-lettuce</module>
   </modules>
 
   <properties>
@@ -19,29 +20,10 @@
     <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <lombok.version>1.16.20</lombok.version>
     <slf4j.version>1.7.25</slf4j.version>
-    <vavr.version>0.9.2</vavr.version>
-    <junit4.version>4.12</junit4.version>
-    <junit.jupiter.version>5.0.2</junit.jupiter.version>
-    <junit.platform.version>1.0.2</junit.platform.version>
   </properties>
 
   <dependencies>
-
-    <!-- In java we trust -->
-    <dependency>
-      <groupId>io.vavr</groupId>
-      <artifactId>vavr</artifactId>
-      <version>${vavr.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <optional>true</optional>
-    </dependency>
     <!-- logging -->
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -80,58 +62,12 @@
       <artifactId>kotlin-reflect</artifactId>
       <version>${kotlin.version}</version>
     </dependency>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-test</artifactId>
-      <version>${kotlin.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- junit 4 -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>${junit4.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.vintage</groupId>
-      <artifactId>junit-vintage-engine</artifactId>
-      <version>${junit4.version}.3</version>
-      <scope>test</scope>
-    </dependency>
-    <!-- junit 5 -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.jupiter.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-launcher</artifactId>
-      <version>${junit.platform.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.junit.platform</groupId>
-      <artifactId>junit-platform-runner</artifactId>
-      <version>${junit.platform.version}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
     <defaultGoal>clean package</defaultGoal>
 
     <plugins>
-      <!-- Java no-arg / all-open / spring -->
       <plugin>
         <artifactId>kotlin-maven-plugin</artifactId>
         <groupId>org.jetbrains.kotlin</groupId>
@@ -139,19 +75,6 @@
 
         <configuration>
           <jvmTarget>1.8</jvmTarget>
-
-          <compilerPlugins>
-            <!-- Or "spring" for the Spring support -->
-            <plugin>all-open</plugin>
-            <plugin>no-arg</plugin>
-            <plugin>spring</plugin>
-          </compilerPlugins>
-
-          <pluginOptions>
-            <!-- Each annotation is placed on its own line -->
-            <option>all-open:annotation=javax.persistence.Entity</option>
-            <option>no-arg:annotation=javax.persistence.Entity</option>
-          </pluginOptions>
         </configuration>
 
         <executions>
@@ -180,19 +103,6 @@
             </configuration>
           </execution>
         </executions>
-
-        <dependencies>
-          <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-maven-allopen</artifactId>
-            <version>${kotlin.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-maven-noarg</artifactId>
-            <version>${kotlin.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
 
       <plugin>
@@ -213,12 +123,16 @@
           <execution>
             <id>java-compile</id>
             <phase>compile</phase>
-            <goals> <goal>compile</goal> </goals>
+            <goals>
+              <goal>compile</goal>
+            </goals>
           </execution>
           <execution>
             <id>java-test-compile</id>
             <phase>test-compile</phase>
-            <goals> <goal>testCompile</goal> </goals>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
           </execution>
         </executions>
       </plugin>
@@ -288,54 +202,7 @@
         </configuration>
       </plugin>
       -->
-
-      <!-- junit 5 -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <!--
-          there are issues with 2.20.1 version
-          The junit-platform-surefire-provider is not compatible with version 2.20 of the maven-surefire-plugin.
-          see https://github.com/junit-team/junit5/issues/809
-        -->
-        <!--<version>2.20.1</version>-->
-        <version>2.19.1</version>
-        <dependencies>
-          <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-surefire-provider</artifactId>
-            <version>${junit.platform.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>${junit.jupiter.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
     </plugins>
   </build>
-
-  <!--
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring-boot.version}</version>
-        <scope>import</scope>
-        <type>pom</type>
-      </dependency>
-
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  -->
 
 </project>

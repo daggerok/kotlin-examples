@@ -19,19 +19,25 @@ script:
 #    -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD || true
 - bash gradlew clean asciidoctor
 #
-- bash gradlew
-- java -jar netty/build/libs/*-all.jar
 #
+- bash gradlew
+- bash mvnw
+#
+#
+- java -jar netty/build/libs/*-all.jar
 - bash gradlew clean :netty:installDist
 - bash netty/build/install/netty/bin/netty
-#
 - bash gradlew clean netty:distZip
 - unzip -o netty/build/distributions/*.zip -d /tmp
 - bash /tmp/netty-0.0.1/bin/netty
-#
-- bash mvnw
 - java -jar netty/target/*-all.jar
-cache:
-  directories:
-  - "$HOME/.m2"
-  - "$HOME/.gradle"
+#
+#
+- bash gradlew
+- java -jar redis-lettuce/build/libs/*-all.jar
+- bash gradlew clean :redis-lettuce:installDist
+- bash redis-lettuce/build/install/redis-lettuce/bin/redis-lettuce
+- bash gradlew clean redis-lettuce:distZip
+- unzip -o redis-lettuce/build/distributions/*.zip -d /tmp
+- bash /tmp/redis-lettuce-0.0.1/bin/redis-lettuce
+- java -jar redis-lettuce/target/*-all.jar

@@ -6,8 +6,10 @@ class App {
 
     @JvmStatic
     fun main(args: Array<String>) {
-      println(args.toList())
-      NettyServer.start(8080)
+
+      EmbeddedRedis.start()
+      LettuceService.subscribe()
+      EmbeddedRedis.stop()
     }
   }
 }

@@ -5,7 +5,6 @@ buildscript {
 }
 
 plugins {
-  //id "base"
   id "org.asciidoctor.convert" version "1.5.6"
   id "org.ajoberstar.git-publish" version "0.2.2"
 }
@@ -41,7 +40,6 @@ asciidoctor.doLast {
 }
 
 gitPublish {
-
   //// bash gradlew clean asciidoctor docs \
   ////   -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
   ////   -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD

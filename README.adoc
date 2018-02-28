@@ -10,6 +10,10 @@ other repos:
 . link:https://github.com/daggerok/spring-data-examples/tree/master/redis-store[Kotlin | Redis Store]
 . link:https://github.com/daggerok/spring-kotlin-examples[Github: daggerok/spring-kotlin-examples]
 
+links:
+
+. link:https://docs.gradle.org/current/userguide/distribution_plugin.html[gradle distribution plugin]
+
 TODO:
 
 . link:https://www.linkedin.com/pulse/from-java-8-kotlin-aliaksandr-liakh

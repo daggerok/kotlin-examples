@@ -1,7 +1,7 @@
 = kotlin-examples image:https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/kotlin-examples"]
 
 //tag::content[]
-=== netty
+=== redis-lettuce
 
 ----
 ./gradlew
@@ -15,7 +15,5 @@ bash netty/build/install/netty/bin/netty
 java -jar target/*-all.jar
 bash target/*-all.jar
 ----
-
-. link:https://netty.io/wiki/all-documents.html[Netty reference]
 
 //end::content[]

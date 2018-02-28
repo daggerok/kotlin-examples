@@ -1,5 +1,9 @@
-apply plugin: "application"
-apply plugin: "com.github.johnrengelman.shadow"
+plugins {
+  id "application"
+}
 
 mainClassName = "daggerok.App"
-shadowJar.mustRunAfter jar
+
+dependencies {
+  compile "io.netty:netty-transport:4.1.21.Final"
+}

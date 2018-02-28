@@ -16,6 +16,7 @@ include::includes/Introduction.adoc[]
 
 == Projects
 include::../../netty/README.adoc[tags=content]
+include::../../netty/README.adoc[tags=content]
 
 == Other repos
 

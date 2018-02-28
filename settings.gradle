@@ -1,3 +1,4 @@
 rootProject.name = "kotlin-examples"
 include("docs")
 include("netty")
+include("redis-lettuce")
