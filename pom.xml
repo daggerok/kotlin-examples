@@ -4,14 +4,14 @@
 
   <groupId>daggerok</groupId>
   <artifactId>kotlin-examples</artifactId>
-  <version>0.1.1</version>
+  <version>0.1.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <scm>
     <connection>scm:git:git@github.com:daggerok/kotlin-examples.git</connection>
     <developerConnection>scm:git:git@github.com:daggerok/kotlin-examples.git</developerConnection>
     <url>https://github.com/daggerok/kotlin-examples</url>
-    <tag>0.1.1</tag>
+    <tag>@{project.version}</tag>
   </scm>
 
   <distributionManagement>
