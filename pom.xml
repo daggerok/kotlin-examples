@@ -14,17 +14,6 @@
     <tag>@{project.version}</tag>
   </scm>
 
-  <distributionManagement>
-    <repository>
-      <id>releasesRepository</id>
-      <url>http://localhost:8081/repository/releases/</url>
-    </repository>
-    <snapshotRepository>
-      <id>snapshotsRepository</id>
-      <url>http://localhost:8081/repository/snapshots/</url>
-    </snapshotRepository>
-  </distributionManagement>
-
   <modules>
     <module>netty</module>
     <module>redis-lettuce</module>
