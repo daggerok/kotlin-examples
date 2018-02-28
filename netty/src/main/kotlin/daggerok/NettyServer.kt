@@ -4,6 +4,7 @@ import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelInboundHandlerAdapter
 import io.netty.channel.nio.NioEventLoopGroup
 
+@Suppress("UNUSED_PARAMETER")
 class NettyServer : ChannelInboundHandlerAdapter() {
 
   companion object {

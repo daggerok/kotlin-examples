@@ -10,7 +10,7 @@
     <version>0.0.1</version>
   </parent>
 
-  <artifactId>lettuce</artifactId>
+  <artifactId>redis-lettuce</artifactId>
   <packaging>jar</packaging>
 
   <dependencies>
@@ -32,42 +32,5 @@
       <version>0.6</version>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <!-- fat jar -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.0</version>
-
-        <configuration>
-          <finalName>${project.artifactId}-${project.version}-all</finalName>
-
-          <appendAssemblyId>false</appendAssemblyId>
-
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-
-          <archive>
-            <manifest>
-              <mainClass>daggerok.App</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-
-        <executions>
-          <execution>
-            <id>assemble-jar-with-dependencies</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>

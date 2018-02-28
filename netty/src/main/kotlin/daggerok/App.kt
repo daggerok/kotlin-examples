@@ -1,13 +1,17 @@
 package daggerok
 
-class App {
-
+/*
+class AppKt {
   companion object {
-
     @JvmStatic
     fun main(args: Array<String>) {
-      println(args.toList())
-      NettyServer.start(8080)
+      println("${args.toList()}")
     }
   }
+}
+*/
+
+fun main(args: Array<String>) {
+  println(args.toList())
+  NettyServer.start(8080)
 }

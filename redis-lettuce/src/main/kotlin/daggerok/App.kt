@@ -1,15 +1,18 @@
 package daggerok
 
-class App {
-
+/*
+class AppKt {
   companion object {
-
     @JvmStatic
     fun main(args: Array<String>) {
-
-      EmbeddedRedis.start()
-      LettuceService.subscribe()
-      EmbeddedRedis.stop()
+      println("${args.toList()}")
     }
   }
+}
+*/
+
+fun main(args: Array<String>) {
+  EmbeddedRedis.start()
+  LettuceService.subscribe()
+  EmbeddedRedis.stop()
 }

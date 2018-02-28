@@ -11,33 +11,60 @@ jdk:
 install: true
 before_script:
 - sudo apt update -y || true
-- sudo apt install -y --no-install-recommends bash unzip git
+- sudo apt install -y --no-install-recommends bash unzip curl
+- source <(curl -fsSL https://raw.github.com/daggerok/bash-functions/master/main.bash)
+- stop_any 27017 8080 80
 script:
 #- >
 #  bash gradlew clean asciidoctor docs \
 #    -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
 #    -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD || true
-- bash gradlew clean asciidoctor
-#
+- bash gradlew -b docs/build.gradle clean asciidoctor
 #
 - bash gradlew
 - bash mvnw
 #
+- java -jar plain-java-sockets/build/libs/*-all.jar
+- stop_any 8080 80
+- bash plain-java-sockets/build/install/plain-java-sockets/bin/plain-java-sockets
+- stop_any 8080 80
+- >
+  for arch in \
+    $(ls plain-java-sockets/build/distributions/*.zip) \
+  ; do
+    unzip -o ${arch} -d /tmp
+  done;
+- bash /tmp/plain-java-sockets-0.0.1/bin/plain-java-sockets
+- stop_any 8080 80
+- java -jar plain-java-sockets/target/*-all.jar
+- stop_any 8080 80
+#
+- java -jar redis-lettuce/build/libs/*-all.jar
+- stop_any 6379
+- bash redis-lettuce/build/install/redis-lettuce/bin/redis-lettuce
+- stop_any 6379
+- >
+  for arch in \
+    $(ls redis-lettuce/build/distributions/*.zip) \
+  ; do
+    unzip -o ${arch} -d /tmp
+  done;
+- bash /tmp/redis-lettuce-0.0.1/bin/redis-lettuce
+- stop_any 6379
+- java -jar redis-lettuce/target/*-all.jar
+- stop_any 6379
 #
 - java -jar netty/build/libs/*-all.jar
-- bash gradlew clean :netty:installDist
 - bash netty/build/install/netty/bin/netty
-- bash gradlew clean netty:distZip
-- unzip -o netty/build/distributions/*.zip -d /tmp
+- >
+  for arch in \
+    $(ls netty/build/distributions/*.zip) \
+  ; do
+    unzip -o ${arch} -d /tmp
+  done;
 - bash /tmp/netty-0.0.1/bin/netty
 - java -jar netty/target/*-all.jar
-#
-#
-- bash gradlew
-- java -jar redis-lettuce/build/libs/*-all.jar
-- bash gradlew clean :redis-lettuce:installDist
-- bash redis-lettuce/build/install/redis-lettuce/bin/redis-lettuce
-- bash gradlew clean redis-lettuce:distZip
-- unzip -o redis-lettuce/build/distributions/*.zip -d /tmp
-- bash /tmp/redis-lettuce-0.0.1/bin/redis-lettuce
-- java -jar redis-lettuce/target/*-all.jar
+cache:
+  directories:
+  - ${HOME}/.m2
+  - ${HOME}/.gradle

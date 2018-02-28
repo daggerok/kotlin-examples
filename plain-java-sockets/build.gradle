@@ -1,0 +1,13 @@
+kotlin {
+  experimental {
+    coroutines "enable"
+  }
+}
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:0.21")
+}

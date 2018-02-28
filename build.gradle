@@ -22,7 +22,13 @@ allprojects { p ->
   apply plugin: "base"
   apply plugin: "maven-publish"
 
-  defaultTasks "clean", "build", "installDist", "distZip", "publish"
+  defaultTasks "clean", "build", "publish", "installDist", "distZip"
+
+  clean.doFirst {
+    ["out"].each {
+      delete "$projectDir/$it"
+    }
+  }
 }
 
 subprojects { sp ->
@@ -68,8 +74,6 @@ subprojects { sp ->
     compile("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
   }
 
-  if (sp.projectDir.absolutePath.contains("kotlin-examples/docs")) return
-
   apply plugin: "com.github.johnrengelman.shadow"
   shadowJar.mustRunAfter jar
 
@@ -85,6 +89,9 @@ subprojects { sp ->
       }
     }
   }
+
+  apply plugin: "application"
+  mainClassName = "daggerok.AppKt"
 }
 
 def profile = project.hasProperty("profile") ? project.getProperty("profile") : "gradle"

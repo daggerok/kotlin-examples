@@ -1,9 +1,3 @@
-plugins {
-  id "application"
-}
-
-mainClassName = "daggerok.App"
-
 dependencies {
   compile "io.lettuce:lettuce-core:5.0.2.RELEASE",
       "com.google.code.gson:gson:2.8.2",

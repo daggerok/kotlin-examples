@@ -12,6 +12,7 @@
   <modules>
     <module>netty</module>
     <module>redis-lettuce</module>
+    <module>plain-java-sockets</module>
   </modules>
 
   <properties>
@@ -138,7 +139,6 @@
       </plugin>
 
       <!-- fat jar -->
-      <!--
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -155,7 +155,7 @@
 
           <archive>
             <manifest>
-              <mainClass>daggerok.App</mainClass>
+              <mainClass>daggerok.AppKt</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -170,7 +170,6 @@
           </execution>
         </executions>
       </plugin>
-      -->
 
       <!-- docker -->
       <!--

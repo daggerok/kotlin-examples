@@ -1,9 +1,3 @@
-plugins {
-  id "application"
-}
-
-mainClassName = "daggerok.App"
-
 dependencies {
   compile "io.netty:netty-transport:4.1.21.Final"
 }

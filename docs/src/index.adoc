@@ -16,13 +16,11 @@ include::includes/Introduction.adoc[]
 
 == Projects
 include::../../netty/README.adoc[tags=content]
-include::../../netty/README.adoc[tags=content]
+include::../../redis-lettuce/README.adoc[tags=content]
+include::../../plain-java-sockets/README.adoc[tags=content]
 
 == Other repos
-
 . link:https://github.com/daggerok/spring-kotlin-examples[Github: daggerok/spring-kotlin-examples]
 
 == links
 include::includes/Links.adoc[]
-
-== Enjoy! :)
