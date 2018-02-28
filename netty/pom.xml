@@ -8,7 +8,7 @@
   <parent>
     <groupId>daggerok</groupId>
     <artifactId>kotlin-examples</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>netty</artifactId>
@@ -25,6 +25,7 @@
   <build>
     <plugins>
       <!-- docker -->
+      <!--
       <plugin>
         <groupId>com.dkanejs.maven.plugins</groupId>
         <artifactId>docker-compose-maven-plugin</artifactId>
@@ -52,6 +53,7 @@
           <detail>true</detail>
         </configuration>
       </plugin>
+      -->
     </plugins>
   </build>
 </project>

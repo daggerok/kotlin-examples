@@ -10,3 +10,5 @@ syntax: glob
 *.ipr
 *.iws
 *.log
+pom.xml.releaseBackup
+release.properties
