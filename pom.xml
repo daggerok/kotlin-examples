@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>daggerok</groupId>
@@ -16,16 +17,43 @@
 
   <distributionManagement>
     <snapshotRepository>
-      <id>snapshotRepository</id>
-      <name>snapshotRepository</name>
-      <url>file://${project.build}/repo/snapshot</url>
+      <id>docker-nexus-snapshots</id>
+      <url>http://127.0.0.1:8081/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
-      <id>releaseRepository</id>
-      <name>releaseRepository</name>
-      <url>file://${project.build}/repo/repository</url>
+      <id>docker-nexus-releases</id>
+      <url>http://127.0.01:8081/repository/maven-releases/</url>
     </repository>
   </distributionManagement>
+
+  <profiles>
+    <profile>
+      <id>releases</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <executions>
+              <execution>
+                <id>default-deploy</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>deploy</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <serverId>docker-nexus-releases</serverId>
+              <nexusUrl>http://127.0.0.1:8081/</nexusUrl>
+              <skipStaging>true</skipStaging>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <modules>
     <module>netty</module>
@@ -110,6 +138,8 @@
           <checkModificationExcludes>
             <checkModificationExclude>pom.xml</checkModificationExclude>
           </checkModificationExcludes>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+          <releaseProfiles>releases</releaseProfiles>
         </configuration>
       </plugin>
 

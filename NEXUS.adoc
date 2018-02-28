@@ -1,0 +1,87 @@
+= kotlin-examples image:https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/kotlin-examples"]
+
+//tag::content[]
+
+.nexus in docker
+[source,bash]
+----
+docker run -d --name my-nexus \
+    -v my-nexus-data:/nexus-data \
+    -p 8081:8081 -p 8082:8082 -p 8083:8083 \
+    sonatype/nexus3:3.0.0
+
+open http://127.0.0.1:8081
+# admin / admin13
+----
+
+.pom.xml
+[source,xml]
+----
+  <distributionManagement>
+    <snapshotRepository>
+      <id>docker-nexus-snapshots</id>
+      <url>http://localhost:8081/repository/maven-snapshots/</url>
+    </snapshotRepository>
+    <repository>
+      <id>docker-nexus-releases</id>
+      <url>http://localhost:8081/repository/maven-releases/</url>
+    </repository>
+  </distributionManagement>
+
+  <profiles>
+    <profile>
+      <id>releases</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.8</version>
+            <executions>
+              <execution>
+                <id>default-deploy</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>deploy</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <serverId>docker-nexus-releases</serverId>
+              <nexusUrl>http://127.0.0.1:8081/</nexusUrl>
+              <skipStaging>true</skipStaging>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+----
+
+.settings.xml
+[source,xml]
+----
+  <servers>
+    <server>
+      <id>docker-nexus-snapshots</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
+
+    <server>
+      <id>docker-nexus-releases</id>
+      <username>admin</username>
+      <password>admin123</password>
+    </server>
+  </servers>
+----
+
+.release
+[source,bash]
+----
+./mvnw -s settings.xml release:clean
+./mvnw -s settings.xml release:prepare
+./mvnw -s settings.xml release:perform
+----
+
+//end::content[]

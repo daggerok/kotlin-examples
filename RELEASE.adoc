@@ -2,7 +2,7 @@
 
 //tag::content[]
 
-.maven-release-plugin + github
+.pom.xml
 [source,xml]
 ----
   <scm>
