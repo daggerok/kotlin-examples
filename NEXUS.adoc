@@ -79,10 +79,10 @@ open http://127.0.0.1:8081
 .release
 [source,bash]
 ----
-./mvnw -s settings.xml -Preleases deploy
 ./mvnw -s settings.xml -Preleases release:clean
 ./mvnw -s settings.xml -Preleases release:prepare
 ./mvnw -s settings.xml -Preleases release:perform
+./mvnw -s settings.xml -Preleases deploy
 ----
 
 //end::content[]
