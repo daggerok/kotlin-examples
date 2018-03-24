@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
 <meta name="author" content="Maksim Kostromin">
-<title>kotlin examples docs (0.0.2)</title>
+<title>kotlin examples docs (0.0.3)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -539,12 +539,12 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>kotlin examples docs (0.0.2) <span class="image"><a class="image" href="https://github.com/daggerok/kotlin-examples"><img src="https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master" alt="Build Status"></a></span></h1>
+<h1>kotlin examples docs (0.0.3) <span class="image"><a class="image" href="https://github.com/daggerok/kotlin-examples"><img src="https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master" alt="Build Status"></a></span></h1>
 <div class="details">
 <span id="author" class="author">Maksim Kostromin</span><br>
 <span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
-<span id="revnumber">version 0.0.2,</span>
-<span id="revdate">2018-03-08 13:11:40 EET</span>
+<span id="revnumber">version 0.0.3,</span>
+<span id="revdate">2018-03-23 10:32:06 CET</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -555,6 +555,7 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#redis-lettuce">1.2. redis-lettuce</a></li>
 <li><a href="#plain-java-sockets">1.3. plain-java-sockets</a></li>
 <li><a href="#kotlin-coroutines-echo-ehlo">1.4. kotlin-coroutines-echo-ehlo</a></li>
+<li><a href="#netty-in-action">1.5. netty-in-action</a></li>
 </ul>
 </li>
 <li><a href="#other-repos">2. Other repos</a></li>
@@ -580,16 +581,16 @@ It&#8217;s contains some kotlin playground projects</p>
 <h3 id="kotlin-netty">1.1. kotlin-netty</h3>
 <div class="listingblock">
 <div class="content">
-<pre>./gradlew
-java -jar build/libs/*-all.jar
-bash build/libs/*-all.jar
-
-./gradlew installDist
-bash kotlin-netty/build/install/kotlin-netty/bin/kotlin-netty
-
+<pre># build
 ./mvnw
-java -jar target/*-all.jar
-bash target/*-all.jar</pre>
+./gradlew
+
+# run server
+bash kotlin-netty/netty-server/build/install/netty-server/bin/netty-server --port=8000
+
+# send client requests
+java -jar kotlin-netty/netty-client/build/libs/netty-client-*-all.jar --port 8000 --host=192.168.0.105 --request=hello
+java -jar kotlin-netty/netty-client/target/*-all.jar --port=8000 --host=192.168.0.105 --request=world!</pre>
 </div>
 </div>
 <div class="olist arabic">
@@ -657,6 +658,26 @@ bash target/*-all.jar</pre>
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="netty-in-action">1.5. netty-in-action</h3>
+<div class="paragraph">
+<p>please, don&#8217;t use that shit, it&#8217;s all about coroutines usage..</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>./gradlew
+java -jar build/libs/*-all.jar
+bash build/libs/*-all.jar
+
+./gradlew installDist
+bash netty-in-action/build/install/netty-in-action/bin/netty-in-action
+
+./mvnw
+java -jar target/*-all.jar
+bash target/*-all.jar</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -686,8 +707,8 @@ bash target/*-all.jar</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 0.0.2<br>
-Last updated 2018-03-08 13:11:40 EET
+Version 0.0.3<br>
+Last updated 2018-03-23 10:32:06 CET
 </div>
 </div>
 </body>
