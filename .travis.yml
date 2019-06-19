@@ -84,6 +84,9 @@ jobs:
       jdk: openjdk8
       script:
         - ./mvnw
+        - ls -lah $TRAVIS_BUILD_DIR/kotlin-netty/netty-client/target/
+        - java -jar $TRAVIS_BUILD_DIR/kotlin-netty/netty-server/target/netty-server-*-all.jar --port=8000 &
+        - wait_for 8000
         - java -jar $TRAVIS_BUILD_DIR/kotlin-netty/netty-client/target/netty-client-*-all.jar --port=8000 --host=127.0.0.1 --request=trololo
         - stop_any 8000 8080 80
     - stage: openjdk8
@@ -132,6 +135,7 @@ jobs:
     - stage: openjdk8
       name: plain-java-sockets maven
       jdk: openjdk8
+      script:
         - ./mvnw
         - java -jar $TRAVIS_BUILD_DIR/plain-java-sockets/target/*-all.jar
         - stop_any 8080 80
@@ -156,6 +160,8 @@ jobs:
     - stage: openjdk8
       name: redis-lettuce maven
       jdk: openjdk8
+      script:
+        - ./mvnw
         - java -jar $TRAVIS_BUILD_DIR/redis-lettuce/target/*-all.jar
         - stop_any 6379
 cache:

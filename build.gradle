@@ -2,7 +2,7 @@ buildscript {
   ext {
     javaVersion = "1.8"
     slf4jVersion = "1.7.25"
-    kotlinVersion = "1.2.30"
+    kotlinVersion = "1.3.40"
   }
 }
 
