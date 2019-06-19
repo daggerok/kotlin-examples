@@ -1,0 +1,19 @@
+= kotlin-coroutines-echo-ehlo image:https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/kotlin-examples"]
+
+//tag::content[]
+=== kotlin-coroutines-echo-ehlo
+plain java hello-ehlo socket server using kotlin coroutines
+
+[sources,bash]
+----
+./gradlew
+java -jar build/libs/*-all.jar
+
+./gradlew installDist
+bash build/install/kotlin-coroutines-echo-ehlo/bin/kotlin-coroutines-echo-ehlo
+
+./mvnw
+java -jar target/*-all.jar
+----
+
+//end::content[]

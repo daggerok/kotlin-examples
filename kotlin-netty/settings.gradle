@@ -1,0 +1,3 @@
+rootProject.name = "kotlin-netty"
+include "netty-server"
+include "netty-client"

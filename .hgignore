@@ -1,0 +1,14 @@
+syntax: glob
+^.gradle/*
+.idea/*
+.git/*
+*/out/*
+*/build/*
+*/target/*
+.DS_Store
+*.iml
+*.ipr
+*.iws
+*.log
+pom.xml.releaseBackup
+release.properties

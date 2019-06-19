@@ -1,0 +1,118 @@
+buildscript {
+  ext {
+    javaVersion = "1.8"
+    slf4jVersion = "1.7.25"
+    kotlinVersion = "1.2.30"
+  }
+}
+
+plugins {
+  id "idea"
+  id "eclipse"
+  id "com.avast.gradle.docker-compose" version "0.6.13"
+  id "org.jetbrains.kotlin.jvm" version "1.2.41" apply false
+  id "com.github.johnrengelman.shadow" version "2.0.2" apply false
+}
+
+allprojects { p ->
+
+  group = "daggerok"
+  version = "0.0.1"
+
+  apply plugin: "base"
+  apply plugin: "maven-publish"
+
+  defaultTasks "clean", "build", "publish", "installDist", "distZip"
+
+  clean.doFirst {
+    ["out"].each {
+      delete "$projectDir/$it"
+    }
+  }
+}
+
+subprojects { sp ->
+
+  apply plugin: "java"
+
+  sourceCompatibility = targetCompatibility = "$javaVersion"
+
+  apply plugin: "kotlin"
+
+  compileKotlin {
+    incremental = true
+    kotlinOptions {
+      freeCompilerArgs = ["-Xjsr305=strict"]
+      jvmTarget = "$javaVersion"
+    }
+  }
+
+  compileTestKotlin {
+    incremental = true
+    kotlinOptions {
+      freeCompilerArgs = ["-Xjsr305=strict"]
+      jvmTarget = "$javaVersion"
+    }
+  }
+
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
+
+  dependencies {
+
+    // compile("org.slf4j:slf4j-jdk14:$slf4jVersion")
+    compile("org.slf4j:slf4j-api:$slf4jVersion")
+    compile("org.slf4j:jul-to-slf4j:$slf4jVersion")
+    compile("org.slf4j:log4j-over-slf4j:$slf4jVersion")
+    compile("ch.qos.logback:logback-classic:1.2.3")
+
+    // Kotlin
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin:2.9.4.1")
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
+    compile("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
+  }
+
+  apply plugin: "com.github.johnrengelman.shadow"
+  shadowJar.mustRunAfter jar
+
+  publishing {
+    publications {
+      shadow(MavenPublication) { publication ->
+        project.shadow.component(publication)
+      }
+    }
+    repositories {
+      maven {
+        url "$buildDir/maven-publish"
+      }
+    }
+  }
+
+  apply plugin: "application"
+  mainClassName = "daggerok.AppKt"
+}
+
+def profile = project.hasProperty("profile") ? project.getProperty("profile") : "gradle"
+
+dockerCompose {
+  useComposeFiles = [project.file("docker-compose-${profile}.yaml")]
+  // captureContainersOutput = true
+  captureContainersOutput = false
+  stopContainers = true
+  removeContainers = true
+  removeImages = "Local"
+  removeVolumes = true
+  removeOrphans = true
+  forceRecreate = true
+  waitForTcpPorts = false
+  projectName = project.name
+}
+
+composeUp.dependsOn assemble
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "4.7"
+  distributionType = "ALL"
+}

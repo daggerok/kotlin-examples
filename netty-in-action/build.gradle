@@ -1,0 +1,14 @@
+kotlin {
+  experimental {
+    coroutines "enable"
+  }
+}
+
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile("org.jetbrains.kotlinx:kotlinx-coroutines-core:0.21")
+  compile("io.netty:netty-transport:4.1.21.Final")
+}

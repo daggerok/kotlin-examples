@@ -1,0 +1,14 @@
+.hg
+.gradle
+out
+build
+target
+.idea
+*.iml
+*.ipr
+*.iws
+*.log
+.DS_Store
+*.log*
+pom.xml.releaseBackup
+release.properties

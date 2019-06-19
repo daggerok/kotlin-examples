@@ -1,0 +1,22 @@
+= kotlin-netty image:https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/kotlin-examples"]
+
+//tag::content[]
+=== kotlin-netty
+
+[sources,bash]
+----
+# build
+./mvnw
+./gradlew
+
+# run server
+bash netty-server/build/install/netty-server/bin/netty-server --port=8000
+
+# send client requests
+java -jar netty-client/build/libs/netty-client-*-all.jar --port 8000 --host=192.168.0.105 --request=hello
+java -jar netty-client/target/*-all.jar --port=8000 --host=192.168.0.105 --request=world!
+----
+
+. link:https://netty.io/wiki/all-documents.html[Netty reference]
+
+//end::content[]

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>daggerok</groupId>
+    <artifactId>kotlin-examples</artifactId>
+    <version>0.1.5-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>kotlin-coroutines-echo-ehlo</artifactId>
+  <packaging>jar</packaging>
+
+  <scm>
+    <developerConnection>scm:ssh:git@github.com:daggerok/kotlin-examples</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.jetbrains.kotlinx</groupId>
+      <artifactId>kotlinx-coroutines-core</artifactId>
+      <version>0.21</version>
+    </dependency>
+  </dependencies>
+
+  <repositories>
+    <repository>
+      <id>central</id>
+      <url>http://jcenter.bintray.com</url>
+    </repository>
+  </repositories>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <configuration>
+          <args>
+            <arg>-Xcoroutines=enable</arg>
+          </args>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

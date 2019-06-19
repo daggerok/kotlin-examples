@@ -1,0 +1,28 @@
+= kotlin examples {project-name} ({project-version}) image:https://travis-ci.org/daggerok/kotlin-examples.svg?branch=master["Build Status", link={github_url}]
+Maksim Kostromin <daggerok@gmail.com>
+{docdatetime}
+:toc:
+:revnumber: {project-version}
+:example-caption!:
+:icons: font
+:toc: left
+:numbered:
+:github_url: https://github.com/daggerok/kotlin-examples
+:github_branch_prefix: {github_url}/tree
+
+[discrete]
+== Introduction
+include::includes/Introduction.adoc[]
+
+== Projects
+include::../../kotlin-netty/README.adoc[tags=content]
+include::../../redis-lettuce/README.adoc[tags=content]
+include::../../plain-java-sockets/README.adoc[tags=content]
+include::../../kotlin-coroutines-echo-ehlo/README.adoc[tags=content]
+include::../../netty-in-action/README.adoc[tags=content]
+
+== Other repos
+. link:https://github.com/daggerok/spring-kotlin-examples[Github: daggerok/spring-kotlin-examples]
+
+== links
+include::includes/Links.adoc[]

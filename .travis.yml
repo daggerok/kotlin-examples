@@ -1,0 +1,167 @@
+dist: trusty
+notifications:
+  email: false
+git:
+  quiet: true
+  depth: 1
+env:
+  global:
+    - TERM=dumb
+    - secure: "ly36768fotI0oeMXXHBrf3aVWGLbgTofFA1AcXj/I0ToVk+I5ecR/JugXu344qoCbBWlZm2PUofkXkd7YtSdbtlJeNemKlV+nF4P5KXqKwZJXzzIh9lcN+cntAwFBZ9QGMDyk/ku6kaUN5akgUSwg9WFsjPMBO6QScJitmwE95TXq92jmEmLlGFEcjuqLol3NRemjcyu2T0BYsOeZZ5SrkMpdZvq031FpJCR1c+mL9rkne6D6caUnHSVS2jBry//bfsVHux+JFOI1QDeuQXgNwUCsLLCH1pTcByTcWMNS63yI1nc8JH/DBmLmNSOA2Zun8m49tgnDpmTPvWtjLvC+F6D+PxjldSpq3beXGRhzi23SVAJ/JfuH+cx+cIQF8wCAfB7ZijYPA7p8VtU4oftyQZPaNdcIpjooEwfytIp3p90iITeScZDggxOk/Uez6lm1g/sHOJ+bdAAb2FAd/AWocwUXMQgSywQTmTZEb6pHt5CQHbZ8QNWhj6qk50/YQFQ2yc4YwREqbxghx3X4HduwAE9OIDnXFEZPtyFA0fjtD2puQP07ml8+s6DrTpY0TqUiR2VNgQret8vOHd/YqNTiZj0UrJqvp7ONbdogxMUDVI6ppIQAQl3lV8HSPoPbs6qj5PPfah3zjjiixCf9qIO3NBLgfAHedo+lLX3iR/D3lA="
+    - secure: "NZEPLyHf31v1v5sBKJvkiO3kCnHLTjkKEZlBVfK/rDfBDdXNRulIpSJAr2ABa0SLmwo6AI1OcNK5fN76JBPBEXFm7gHxgJkNj5f0NJepYYOQ0wIkps4z4TexsIubsbfg4z2uW2EDhiyke7JVnDVSrTJ/z8a3d8SGWRxZqNXYe4gxncvzKxQmZTMpX7YiqW/vyxfMBiRwXi1znc5P0uMjri+Lhcpn2iTAguTVBKyMNjTFG4J8sDyeY+Nw7h3Jwelp1wh6vthFDsD41MzmhYKnwUBiwNXs2QOup8AAqBeMfXhm1ByLuoEgwRyInJd4RhwBbEH4xSrtn9ltOSDV6oAj+iwxnWzz1uWrov6zBHn8cnVw1rVIhQBXYEqfR66fj7TJ6cBfogFCHo1mkaXEvnG7qC0AQFeVTXKZ0kmDytad3vBh2AKUFUPwHz29VKgnjD/+xqEdTlk42m+bSy5XD/xv1cbedxogfnuFlipGhcuzZnvD26B2zXbFamSS8iI6kpCmrrDoVeYSyChBw5whzgBBk2afNZ2SVNzuyg+1QeY/ubGSbaIrx7/hkmYk7caURQEfZm4yoknWp6A85v1+iIff996q0EcVzHLV+NLgH+QTIH76MciHvouWPUSSk8WVgTtyor0/DUPNMeOrTo2gTpxtryYjC6XxfGUUxJ8SccwXkTI="
+language: java
+#jdk: openjdk8
+jdk: openjdk11
+python: 3
+install: true
+addons:
+  apt:
+    update: true
+    packages:
+      - docker-ce
+      - python3-dev
+      - python3-pip
+      - python3-six
+      - python3-setuptools
+      - libxml2-utils
+      - unzip
+      - sudo
+      - lsof
+      - wget
+      - bash
+      - curl
+      - jq
+before_install:
+  - mkdir -p $HOME/.local/bin
+  # pip -> httpie
+  - export PATH=$HOME/.local/bin:$PATH
+  - which pip3    || echo 'which pip3 command failed.'
+  - pip3 install --user $(whoami) --upgrade pip # not pip3
+  - which pip3    || echo 'which pip3 command failed.'
+  - pip3 install --user $(whoami) --upgrade httpie
+  - http --version --debug
+  # docker compose
+  - docker-compose -v
+  - ls -lah | grep docker-compose
+  - echo "eeceuting curl -L https://github.com/docker/compose/releases/download/1.25.0-rc1/docker-compose-$(uname -s)-$(uname -m) -o docker-compose command"
+  - curl -L https://github.com/docker/compose/releases/download/1.25.0-rc1/docker-compose-$(uname -s)-$(uname -m) -o docker-compose
+  - ls -lah | grep docker-compose
+  - chmod +x ./docker-compose
+  - mv ./docker-compose $HOME/.local/bin/
+  - docker-compose -v
+  # custom scripts -> wait_for $portNumber} / stop_any ${port1} ${port2} ...
+  - source <(curl -fsSL https://raw.github.com/daggerok/bash-functions/master/main.bash)
+  - stop_any 80 8080 5432 5672 27017
+jobs:
+  include:
+    - stage: openjdk11
+      name: kotlin-coroutines-examples
+      jdk: openjdk11
+      script: bash $TRAVIS_BUILD_DIR/kotlin-coroutines-examples/gradlew -b $TRAVIS_BUILD_DIR/kotlin-coroutines-examples/build.gradle.kts
+    - stage: openjdk8
+      name: build root and docs
+      jdk: openjdk8
+      script:
+        - jdk_switcher use oraclejdk8                 || echo oops
+        #- >
+        #  bash gradlew clean asciidoctor docs \
+        #    -Dorg.ajoberstar.grgit.auth.username=$GITHUB_USERNAME \
+        #    -Dorg.ajoberstar.grgit.auth.password=$GITHUB_PASSWORD || true
+        - bash $TRAVIS_BUILD_DIR/gradlew -b $TRAVIS_BUILD_DIR/docs/build.gradle clean asciidoctor
+        - bash $TRAVIS_BUILD_DIR/gradlew >/dev/null 2>&1
+        - bash $TRAVIS_BUILD_DIR/mvnw >/dev/null 2>&1
+    - stage: openjdk8
+      name: kotlin-netty gradle
+      jdk: openjdk8
+      script:
+        - cd $TRAVIS_BUILD_DIR
+        - ./gradlew
+        - bash $TRAVIS_BUILD_DIR/kotlin-netty/netty-server/build/install/netty-server/bin/netty-server --port=8000 &
+        - wait_for 8000
+        - bash $TRAVIS_BUILD_DIR/kotlin-netty/netty-client/build/install/netty-client/bin/netty-client --port=8000 --request=ololo
+    - stage: openjdk8
+      name: kotlin-netty maven
+      jdk: openjdk8
+      script:
+        - ./mvnw
+        - java -jar $TRAVIS_BUILD_DIR/kotlin-netty/netty-client/target/netty-client-*-all.jar --port=8000 --host=127.0.0.1 --request=trololo
+        - stop_any 8000 8080 80
+    - stage: openjdk8
+      name: kotlin-coroutines-echo-ehlo gradle
+      jdk: openjdk8
+      script:
+        - cd $TRAVIS_BUILD_DIR
+        - ./gradlew
+        - java -jar $TRAVIS_BUILD_DIR/kotlin-coroutines-echo-ehlo/build/libs/*-all.jar
+        - stop_any 8080 80
+        - bash $TRAVIS_BUILD_DIR/kotlin-coroutines-echo-ehlo/build/install/kotlin-coroutines-echo-ehlo/bin/kotlin-coroutines-echo-ehlo
+        - stop_any 8080 80
+        - >
+          for arch in \
+            $(ls $TRAVIS_BUILD_DIR/kotlin-coroutines-echo-ehlo/build/distributions/*.zip) \
+          ; do
+            unzip -o ${arch} -d /tmp
+          done;
+        - bash /tmp/kotlin-coroutines-echo-ehlo-0.0.1/bin/kotlin-coroutines-echo-ehlo
+        - stop_any 8080 80
+    - stage: openjdk8
+      name: kotlin-coroutines-echo-ehlo maven
+      jdk: openjdk8
+      script:
+        - ./mvnw
+        - java -jar $TRAVIS_BUILD_DIR/kotlin-coroutines-echo-ehlo/target/*-all.jar
+        - stop_any 8080 80
+    - stage: openjdk8
+      name: plain-java-sockets gradle
+      jdk: openjdk8
+      script:
+        - cd $TRAVIS_BUILD_DIR
+        - ./gradlew
+        - java -jar $TRAVIS_BUILD_DIR/plain-java-sockets/build/libs/*-all.jar
+        - stop_any 8080 80
+        - bash $TRAVIS_BUILD_DIR/plain-java-sockets/build/install/plain-java-sockets/bin/plain-java-sockets
+        - stop_any 8080 80
+        - >
+          for arch in \
+            $(ls $TRAVIS_BUILD_DIR/plain-java-sockets/build/distributions/*.zip) \
+          ; do
+            unzip -o ${arch} -d /tmp
+          done;
+        - bash /tmp/plain-java-sockets-0.0.1/bin/plain-java-sockets
+        - stop_any 8080 80
+    - stage: openjdk8
+      name: plain-java-sockets maven
+      jdk: openjdk8
+        - ./mvnw
+        - java -jar $TRAVIS_BUILD_DIR/plain-java-sockets/target/*-all.jar
+        - stop_any 8080 80
+    - stage: openjdk8
+      name: redis-lettuce gradle
+      jdk: openjdk8
+      script:
+        - cd $TRAVIS_BUILD_DIR
+        - ./gradlew
+        - java -jar $TRAVIS_BUILD_DIR/redis-lettuce/build/libs/*-all.jar
+        - stop_any 6379
+        - bash $TRAVIS_BUILD_DIR/redis-lettuce/build/install/redis-lettuce/bin/redis-lettuce
+        - stop_any 6379
+        - >
+          for arch in \
+            $(ls $TRAVIS_BUILD_DIR/redis-lettuce/build/distributions/*.zip) \
+          ; do
+            unzip -o ${arch} -d /tmp
+          done;
+        - bash /tmp/redis-lettuce-0.0.1/bin/redis-lettuce
+        - stop_any 6379
+    - stage: openjdk8
+      name: redis-lettuce maven
+      jdk: openjdk8
+        - java -jar $TRAVIS_BUILD_DIR/redis-lettuce/target/*-all.jar
+        - stop_any 6379
+cache:
+  pip: true
+  packages: true
+  directories:
+    - ${HOME}/.m2
+    - ${HOME}/.gradle
+    - ${HOME}/.docker
