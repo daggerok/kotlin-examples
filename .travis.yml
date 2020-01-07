@@ -9,7 +9,7 @@ env:
     - secure: "ly36768fotI0oeMXXHBrf3aVWGLbgTofFA1AcXj/I0ToVk+I5ecR/JugXu344qoCbBWlZm2PUofkXkd7YtSdbtlJeNemKlV+nF4P5KXqKwZJXzzIh9lcN+cntAwFBZ9QGMDyk/ku6kaUN5akgUSwg9WFsjPMBO6QScJitmwE95TXq92jmEmLlGFEcjuqLol3NRemjcyu2T0BYsOeZZ5SrkMpdZvq031FpJCR1c+mL9rkne6D6caUnHSVS2jBry//bfsVHux+JFOI1QDeuQXgNwUCsLLCH1pTcByTcWMNS63yI1nc8JH/DBmLmNSOA2Zun8m49tgnDpmTPvWtjLvC+F6D+PxjldSpq3beXGRhzi23SVAJ/JfuH+cx+cIQF8wCAfB7ZijYPA7p8VtU4oftyQZPaNdcIpjooEwfytIp3p90iITeScZDggxOk/Uez6lm1g/sHOJ+bdAAb2FAd/AWocwUXMQgSywQTmTZEb6pHt5CQHbZ8QNWhj6qk50/YQFQ2yc4YwREqbxghx3X4HduwAE9OIDnXFEZPtyFA0fjtD2puQP07ml8+s6DrTpY0TqUiR2VNgQret8vOHd/YqNTiZj0UrJqvp7ONbdogxMUDVI6ppIQAQl3lV8HSPoPbs6qj5PPfah3zjjiixCf9qIO3NBLgfAHedo+lLX3iR/D3lA="
     - secure: "NZEPLyHf31v1v5sBKJvkiO3kCnHLTjkKEZlBVfK/rDfBDdXNRulIpSJAr2ABa0SLmwo6AI1OcNK5fN76JBPBEXFm7gHxgJkNj5f0NJepYYOQ0wIkps4z4TexsIubsbfg4z2uW2EDhiyke7JVnDVSrTJ/z8a3d8SGWRxZqNXYe4gxncvzKxQmZTMpX7YiqW/vyxfMBiRwXi1znc5P0uMjri+Lhcpn2iTAguTVBKyMNjTFG4J8sDyeY+Nw7h3Jwelp1wh6vthFDsD41MzmhYKnwUBiwNXs2QOup8AAqBeMfXhm1ByLuoEgwRyInJd4RhwBbEH4xSrtn9ltOSDV6oAj+iwxnWzz1uWrov6zBHn8cnVw1rVIhQBXYEqfR66fj7TJ6cBfogFCHo1mkaXEvnG7qC0AQFeVTXKZ0kmDytad3vBh2AKUFUPwHz29VKgnjD/+xqEdTlk42m+bSy5XD/xv1cbedxogfnuFlipGhcuzZnvD26B2zXbFamSS8iI6kpCmrrDoVeYSyChBw5whzgBBk2afNZ2SVNzuyg+1QeY/ubGSbaIrx7/hkmYk7caURQEfZm4yoknWp6A85v1+iIff996q0EcVzHLV+NLgH+QTIH76MciHvouWPUSSk8WVgTtyor0/DUPNMeOrTo2gTpxtryYjC6XxfGUUxJ8SccwXkTI="
 language: java
-jdk: openjdk11
+jdk: openjdk8
 python: 3.7
 install: true
 addons:
@@ -39,7 +39,6 @@ jobs:
       script: bash $TRAVIS_BUILD_DIR/kotlin-coroutines-examples/gradlew -b $TRAVIS_BUILD_DIR/kotlin-coroutines-examples/build.gradle.kts
     - stage: test
       name: build root and docs
-      jdk: openjdk8
       script:
         #- >
         #  bash gradlew clean asciidoctor docs \
@@ -50,7 +49,6 @@ jobs:
         - bash $TRAVIS_BUILD_DIR/mvnw >/dev/null 2>&1
     - stage: test
       name: kotlin-netty gradle
-      jdk: openjdk8
       script:
         - cd $TRAVIS_BUILD_DIR
         - ./gradlew
@@ -59,7 +57,6 @@ jobs:
         - bash $TRAVIS_BUILD_DIR/kotlin-netty/netty-client/build/install/netty-client/bin/netty-client --port=8000 --request=ololo
     - stage: test
       name: kotlin-netty maven
-      jdk: openjdk8
       script:
         - ./mvnw
         - ls -lah $TRAVIS_BUILD_DIR/kotlin-netty/netty-client/target/
@@ -69,7 +66,6 @@ jobs:
         - stop_any 8000 8080 80
     - stage: test
       name: kotlin-coroutines-echo-ehlo gradle
-      jdk: openjdk8
       script:
         - cd $TRAVIS_BUILD_DIR
         - ./gradlew
@@ -87,14 +83,12 @@ jobs:
         - stop_any 8080 80
     - stage: test
       name: kotlin-coroutines-echo-ehlo maven
-      jdk: openjdk8
       script:
         - ./mvnw
         - java -jar $TRAVIS_BUILD_DIR/kotlin-coroutines-echo-ehlo/target/*-all.jar
         - stop_any 8080 80
     - stage: test
       name: plain-java-sockets gradle
-      jdk: openjdk8
       script:
         - cd $TRAVIS_BUILD_DIR
         - ./gradlew
@@ -112,14 +106,12 @@ jobs:
         - stop_any 8080 80
     - stage: test
       name: plain-java-sockets maven
-      jdk: openjdk8
       script:
         - ./mvnw
         - java -jar $TRAVIS_BUILD_DIR/plain-java-sockets/target/*-all.jar
         - stop_any 8080 80
     - stage: test
       name: redis-lettuce gradle
-      jdk: openjdk8
       script:
         - cd $TRAVIS_BUILD_DIR
         - ./gradlew
@@ -137,7 +129,6 @@ jobs:
         - stop_any 6379
     - stage: test
       name: redis-lettuce maven
-      jdk: openjdk8
       script:
         - ./mvnw
         - java -jar $TRAVIS_BUILD_DIR/redis-lettuce/target/*-all.jar
