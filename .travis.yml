@@ -1,4 +1,3 @@
-dist: trusty
 notifications:
   email: false
 git:
@@ -11,7 +10,7 @@ env:
     - secure: "NZEPLyHf31v1v5sBKJvkiO3kCnHLTjkKEZlBVfK/rDfBDdXNRulIpSJAr2ABa0SLmwo6AI1OcNK5fN76JBPBEXFm7gHxgJkNj5f0NJepYYOQ0wIkps4z4TexsIubsbfg4z2uW2EDhiyke7JVnDVSrTJ/z8a3d8SGWRxZqNXYe4gxncvzKxQmZTMpX7YiqW/vyxfMBiRwXi1znc5P0uMjri+Lhcpn2iTAguTVBKyMNjTFG4J8sDyeY+Nw7h3Jwelp1wh6vthFDsD41MzmhYKnwUBiwNXs2QOup8AAqBeMfXhm1ByLuoEgwRyInJd4RhwBbEH4xSrtn9ltOSDV6oAj+iwxnWzz1uWrov6zBHn8cnVw1rVIhQBXYEqfR66fj7TJ6cBfogFCHo1mkaXEvnG7qC0AQFeVTXKZ0kmDytad3vBh2AKUFUPwHz29VKgnjD/+xqEdTlk42m+bSy5XD/xv1cbedxogfnuFlipGhcuzZnvD26B2zXbFamSS8iI6kpCmrrDoVeYSyChBw5whzgBBk2afNZ2SVNzuyg+1QeY/ubGSbaIrx7/hkmYk7caURQEfZm4yoknWp6A85v1+iIff996q0EcVzHLV+NLgH+QTIH76MciHvouWPUSSk8WVgTtyor0/DUPNMeOrTo2gTpxtryYjC6XxfGUUxJ8SccwXkTI="
 language: java
 jdk: openjdk11
-python: 3
+python: 3.7
 install: true
 addons:
   apt:
@@ -93,7 +92,7 @@ jobs:
         - ./mvnw
         - java -jar $TRAVIS_BUILD_DIR/kotlin-coroutines-echo-ehlo/target/*-all.jar
         - stop_any 8080 80
-    - stage: openjdk8
+    - stage: test
       name: plain-java-sockets gradle
       jdk: openjdk8
       script:
@@ -111,14 +110,14 @@ jobs:
           done;
         - bash /tmp/plain-java-sockets-0.0.1/bin/plain-java-sockets
         - stop_any 8080 80
-    - stage: openjdk8
+    - stage: test
       name: plain-java-sockets maven
       jdk: openjdk8
       script:
         - ./mvnw
         - java -jar $TRAVIS_BUILD_DIR/plain-java-sockets/target/*-all.jar
         - stop_any 8080 80
-    - stage: openjdk8
+    - stage: test
       name: redis-lettuce gradle
       jdk: openjdk8
       script:
@@ -136,7 +135,7 @@ jobs:
           done;
         - bash /tmp/redis-lettuce-0.0.1/bin/redis-lettuce
         - stop_any 6379
-    - stage: openjdk8
+    - stage: test
       name: redis-lettuce maven
       jdk: openjdk8
       script:
