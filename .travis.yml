@@ -25,8 +25,13 @@ before_install:
   - pip3 install --user --upgrade pip setuptools
   - pip install --user --upgrade httpie
   - #
-  - source <(curl -fsSL https://raw.github.com/daggerok/bash-functions/master/main.bash)
-  - stop_any 80 8080 5432 5672 27017
+  - |
+    if [ ! -f ${HOME}/.local/daggerok/bash-functions/master/main.bash ] ; then
+      mkdir -p ${HOME}/.local/daggerok/bash-functions/master
+      curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash > ${HOME}/.local/daggerok/bash-functions/master/main.bash
+    fi
+    source ${HOME}/.local/daggerok/bash-functions/master/main.bash
+    stop_any 3000 5000 80 8080 5432 5672 27017
 jobs:
   include:
     - stage: test
