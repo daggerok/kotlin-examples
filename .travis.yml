@@ -34,7 +34,7 @@ before_install:
 jobs:
   include:
     - stage: test
-      name: openjdk11: kotlin-coroutines-examples
+      name: openjdk11 - kotlin-coroutines-examples
       jdk: openjdk11
       script: bash $TRAVIS_BUILD_DIR/kotlin-coroutines-examples/gradlew -b $TRAVIS_BUILD_DIR/kotlin-coroutines-examples/build.gradle.kts
     - stage: test
